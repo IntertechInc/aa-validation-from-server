@@ -8,6 +8,7 @@ in the form of the [JSON object that AA expects](https://github.com/AngularAgili
 ##Usage
 Typically, the following code would reside on the Web API controller code:
 
+```C#
 	public IHttpActionResult GetValidations(string dtoObjectName, string jsonObjectName)
 	{
 		var valHelper = new ValidationHelper();
@@ -16,12 +17,13 @@ Typically, the following code would reside on the Web API controller code:
 	
 	    return Ok(jsonObject);
 	}
-
+```
 - dtoObjectName is the name of the class in your DTO assembly.
 - jsonObjectName is the name of the model object on your website.
 - "Namespace.If.Doesnt.Match.Assembly" is an alternate namespace...by default is uses DTO.Assembly.Name.
 - "DTO.Assembly.Name" is the name of the assembly to load for reflecting the DTO properties that have validation attributes.
 ##DTO Example
+```C#
     namespace AATestAPI.Models
     {
     public class ValidationTest
@@ -57,11 +59,11 @@ Typically, the following code would reside on the Web API controller code:
         public string StringLengthTest { get; set; }
     }
 	}
+```
 ##AngularJS Website
 ###View
 This is a typical Angular Agility form:
 
-<MTMarkdownOptions output='raw'>
     <div class="page-header">
         <h1>Angular Agility Validation From Server</h1>
     </div>
@@ -78,11 +80,11 @@ This is a typical Angular Agility form:
         <input aa-field-group="model.StringLengthTest" />
     
         <button aa-submit-form="submit()" type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</MTMarkdownOptions>
+     </div>
+
 ###UI-ROUTER State Definition
 Use the 'resolve' property and return a promise so that the controller doesn't get created until the validation is retrieved from the server.
-See this excellent explanation of this technique: [How to force AngularJS resource resolution with ui-router](http://www.jvandemo.com/how-to-resolve-angularjs-resources-with-ui-router/)
+See this excellent explanation of this technique: [How to force AngularJS resource resolution with ui-router](http://www.jvandemo.com/how-to-resolve-angularjs-resources-with-ui-router/).
 Of course this assumes you are using [ui-router](https://github.com/angular-ui/ui-router).
 
 ```javascript
