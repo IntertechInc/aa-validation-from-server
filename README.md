@@ -61,6 +61,7 @@ Typically, the following code would reside on the Web API controller code:
 ###View
 This is a typical Angular Agility form:
 
+<MTMarkdownOptions output='raw'>
     <div class="page-header">
         <h1>Angular Agility Validation From Server</h1>
     </div>
@@ -78,11 +79,13 @@ This is a typical Angular Agility form:
     
         <button aa-submit-form="submit()" type="submit" class="btn btn-primary">Submit</button>
     </div>
+</MTMarkdownOptions>
 ###UI-ROUTER State Definition
 Use the 'resolve' property and return a promise so that the controller doesn't get created until the validation is retrieved from the server.
 See this excellent explanation of this technique: [How to force AngularJS resource resolution with ui-router](http://www.jvandemo.com/how-to-resolve-angularjs-resources-with-ui-router/)
 Of course this assumes you are using [ui-router](https://github.com/angular-ui/ui-router).
 
+```javascript
     angular.module('app', [
         'ui.router',
         'ui.bootstrap',
@@ -109,9 +112,11 @@ Of course this assumes you are using [ui-router](https://github.com/angular-ui/u
             }
         });
     }]);
+```
 ###Controller
 The controller now can inject validationData since it was resolved in the router definition.
 
+```javascript
     angular
         .module('app')
         .controller('aatestController', aatestController);
@@ -126,3 +131,4 @@ The controller now can inject validationData since it was resolved in the router
             $scope.formconfig = angular.isUndefined(validationData) ? undefined : validationData.data;
         }
     }
+```
