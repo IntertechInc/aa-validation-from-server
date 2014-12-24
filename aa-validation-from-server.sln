@@ -38,6 +38,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AATestSite", "http://localh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AATestAPI", "AATestAPI\AATestAPI.csproj", "{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4C7BB457-4636-4990-AAC6-98EDA5B828D5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
