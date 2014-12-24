@@ -22,6 +22,7 @@ Typically, the following code would reside on the Web API controller code:
 - jsonObjectName is the name of the model object on your website.
 - "Namespace.If.Doesnt.Match.Assembly" is an alternate namespace...by default is uses DTO.Assembly.Name.
 - "DTO.Assembly.Name" is the name of the assembly to load for reflecting the DTO properties that have validation attributes.
+
 ##DTO Example
 ```C#
     namespace AATestAPI.Models
