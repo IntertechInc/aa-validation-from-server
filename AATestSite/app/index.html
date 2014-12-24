@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Agility Validation From Server</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../Content/aa.FormExtensions.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="page fade-in-left" ui-view="content"></div>
+            </div>
+        </div>
+
+        <div aa-notify style="position: fixed; bottom: 25px; right: 25px;"></div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.js"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-loader.min.js"></script>-->
+    <script src="../Scripts/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="../Scripts/angular-ui-router.min.js"></script>
+    <script src="../Scripts/angular-agility.js"></script>
+
+    <script src="app.js"></script>
+    <script src="aatestController.js"></script>
+    <script src="validationService.js"></script>
+</body>
+</html>

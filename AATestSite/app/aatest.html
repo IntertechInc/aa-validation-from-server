@@ -1,0 +1,17 @@
+﻿<div class="page-header">
+    <h1>Angular Agility Validation From Server</h1>
+</div>
+<div aa-configured-form validation-config="formconfig" class="form-horizontal" ng-form="aatest">
+    <input aa-field-group="model.Name" />
+    <input aa-field-group="model.Phone" />
+    <input aa-field-group="model.Website" />
+    <input aa-field-group="model.CreditCard" />
+    <input aa-field-group="model.Email" />
+    <input aa-field-group="model.MaxLengthTest" />
+    <input aa-field-group="model.MinLengthTest" />
+    <input aa-field-group="model.RangeTest" type="number" />
+    <input aa-field-group="model.IntegerString" />
+    <input aa-field-group="model.StringLengthTest" />
+
+    <button aa-submit-form="submit()" type="submit" class="btn btn-primary">Submit</button>
+</div>

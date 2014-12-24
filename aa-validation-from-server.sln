@@ -14,6 +14,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{53189F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intertech.Validation.Test", "Intertech.Validation.Test\Intertech.Validation.Test.csproj", "{B788342E-D9C5-44D2-99A1-3D97CD73DF09}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AATestSite", "http://localhost:52536", "{23CC7B4C-16D2-45A1-85F1-EC95F182E366}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52536"
+		Debug.AspNetCompiler.PhysicalPath = "AATestSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52536\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52536"
+		Release.AspNetCompiler.PhysicalPath = "AATestSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52536\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "AATestSite\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AATestAPI", "AATestAPI\AATestAPI.csproj", "{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +52,14 @@ Global
 		{B788342E-D9C5-44D2-99A1-3D97CD73DF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B788342E-D9C5-44D2-99A1-3D97CD73DF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B788342E-D9C5-44D2-99A1-3D97CD73DF09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CC7B4C-16D2-45A1-85F1-EC95F182E366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CC7B4C-16D2-45A1-85F1-EC95F182E366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CC7B4C-16D2-45A1-85F1-EC95F182E366}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CC7B4C-16D2-45A1-85F1-EC95F182E366}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C616FF0C-21C7-4AC8-AE1E-1FA96B5559B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
