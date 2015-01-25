@@ -5,6 +5,9 @@ in the form of the [JSON object that AA expects](https://github.com/AngularAgili
 
 [NuGet Package](https://www.nuget.org/packages/Intertech.Validation.AA/)
 
+##Blog
+[Angular Agility: AngularJS Validation Pulled from Web API](http://www.intertech.com/Blog/angular-agility-angularjs-validation-pulled-from-web-api/)
+
 ##Usage
 Typically, the following code would reside on the Web API controller code:
 
