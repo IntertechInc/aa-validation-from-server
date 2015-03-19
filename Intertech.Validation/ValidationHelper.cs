@@ -7,6 +7,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Intertech.Validation.Converters;
+using System.Globalization;
 
 namespace Intertech.Validation
 {
@@ -50,11 +51,11 @@ namespace Intertech.Validation
         /// <param name="jsonObjectName"></param>
         /// <param name="assemblyNames">Names of assemblies to check</param>
         /// <returns></returns>
-        public object GetValidations(string dtoObjectName, string jsonObjectName, string alternateNamespace, params string[] assemblyNames)
+        public object GetValidations(string dtoObjectName, string jsonObjectName, string alternateNamespace, bool useCamelCaseForProperties, params string[] assemblyNames)
         {
             var jsonString = new StringBuilder("{ validations: {");
 
-            GetValidationsForDto(dtoObjectName, jsonObjectName, jsonString, false, alternateNamespace, assemblyNames);
+            GetValidationsForDto(dtoObjectName, jsonObjectName, jsonString, false, alternateNamespace, useCamelCaseForProperties, assemblyNames);
 
             jsonString.Append("} }");
 
@@ -80,7 +81,7 @@ namespace Intertech.Validation
             return registrations.AsEnumerable<Type>();
         }
 
-        private void GetValidationsForDto(string dtoObjectName, string jsonObjectName, StringBuilder jsonString, bool isContainedDto, string alternateNamespace, params string[] assemblyNames)
+        private void GetValidationsForDto(string dtoObjectName, string jsonObjectName, StringBuilder jsonString, bool isContainedDto, string alternateNamespace, bool useCamelCaseForProperties, params string[] assemblyNames)
         {
             if (isContainedDto)
             {
@@ -121,7 +122,14 @@ namespace Intertech.Validation
                         if (!isFirstAttr)
                         {
                             var sep = isFirstProp ? string.Empty : ",";
-                            jsonString.Append(sep + prop.Name + ": { ");
+							if (useCamelCaseForProperties)
+							{
+								jsonString.Append(sep + CamelCaseProperty(prop.Name) + ": { ");
+							}
+							else
+							{
+								jsonString.Append(sep + prop.Name + ": { ");
+							}
                             jsonString.Append(attrStr.ToString());
                             jsonString.Append("}");
 
@@ -187,6 +195,35 @@ namespace Intertech.Validation
 
             return type;
         }
+
+		private string CamelCaseProperty(string input)
+		{
+			if (string.IsNullOrEmpty(input) || !char.IsUpper(input[0]))
+			{
+				return input;
+			}
+
+			var sb = new StringBuilder();
+
+			for (var i = 0; i < input.Length; ++i)
+			{
+				var flag = i + 1 < input.Length;
+				if (i == 0 || !flag || char.IsUpper(input[i + 1]))
+				{
+					var ch = char.ToLower(input[i], CultureInfo.InvariantCulture);
+					sb.Append(ch);
+				}
+				else
+				{
+					sb.Append(input.Substring(i));
+					break;
+				}
+			}
+
+			return sb.ToString();
+		}
+
+
 
         #endregion Private Methods
     }
