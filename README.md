@@ -16,7 +16,7 @@ Typically, the following code would reside on the Web API controller code:
 	{
 		var valHelper = new ValidationHelper();
         object jsonObject = valHelper.GetValidations(dtoObjectName, jsonObjectName,
-			"Namespace.If.Doesnt.Match.Assembly", "DTO.Assembly.Name");
+			"Namespace.If.Doesnt.Match.Assembly", useCamelCaseForProperties, "DTO.Assembly.Name");
 	
 	    return Ok(jsonObject);
 	}
@@ -24,6 +24,7 @@ Typically, the following code would reside on the Web API controller code:
 - dtoObjectName is the name of the class in your DTO assembly.
 - jsonObjectName is the name of the model object on your website.
 - "Namespace.If.Doesnt.Match.Assembly" is an alternate namespace...by default is uses DTO.Assembly.Name.
+- "useCamelCaseForProperties" is a bool indicating if the helper should provide case alteration to property names to produce camel case.
 - "DTO.Assembly.Name" is the name of the assembly to load for reflecting the DTO properties that have validation attributes.
 
 ##DTO Example
