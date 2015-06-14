@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Intertech.Validation.Constants;
 using Intertech.Validation.Test.TestDTO;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Intertech.Validation.Test
 {
@@ -13,12 +14,20 @@ namespace Intertech.Validation.Test
     {
         private object _validations;
         private object _emptyValidations;
+        private GetValidationsParms _parms;
 
         [TestInitialize]
         public void Init()
         {
+            _parms = new GetValidationsParms("TestDTO.ValidationTest", "model")
+            {
+                DtoAssemblyNames = new List<string> { "Intertech.Validation.Test" },
+                ResourceAssemblyName = "Intertech.Validation.Test",
+                ResourceNamespace = "Intertech.Validation.Test.TestDTO"
+            };
+
             var vals = new StringBuilder("{ validations: { model: { ");
-            vals.Append("Name: { \"ng-minlength\": 3, \"ng-minlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, "Name", "3") + "\", \"required\": true, \"required-msg\": \"" + string.Format(DataAnnotationConstants.DefaultRequiredErrorMsg, "Name") + "\" }");
+            vals.Append("Name: { \"ng-minlength\": 3, \"ng-minlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, "Name", "3") + "\", \"required\": true, \"required-msg\": \"" + TestResource.NameRequiredResource + "\" }");
             vals.Append(", CreditCard: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.CreditCard) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultCreditCardErrorMsg, "CreditCard") + "\" }");
             vals.Append(", Email: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Email) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultEmailErrorMsg, "Email") + "\" }");
             vals.Append(", Email2: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Email) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.Email + "\" }");
@@ -60,13 +69,13 @@ namespace Intertech.Validation.Test
         }
 
         [TestMethod]
-        public void ValidationHelper_GetValidations_Success_Test()
+        public void ValidationHelper_GetValidations_Success_ParmsObject_Test()
         {
             // Assemble
             var valHelper = new ValidationHelper();
 
             // Act
-            var vals = valHelper.GetValidations("TestDTO.ValidationTest", "model", null, "Intertech.Validation.Test");
+            var vals = valHelper.GetValidations(_parms);
 
             // Assert
             Assert.IsNotNull(vals);

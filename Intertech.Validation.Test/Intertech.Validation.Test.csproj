@@ -59,6 +59,12 @@
   <ItemGroup>
     <Compile Include="TestDTO\Constants.cs" />
     <Compile Include="TestDTO\NoValidations.cs" />
+    <Compile Include="TestDTO\TestResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ValidationTestTests.cs" />
     <Compile Include="TestDTO\ValidationTest.cs" />
     <Compile Include="ValidationHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestDTO\TestResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -82,8 +82,44 @@ namespace Intertech.Validation.Converters
             return value;
         }
 
+        /// <summary>
+        /// Get the error message for the given property.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="attr"></param>
+        /// <returns></returns>
+        protected string GetErrorMessage(string propertyName, CustomAttributeData attr, string resourceNamespace, string resourceAssemblyName)
+        {
+            // First see if the ErrorMessage property is there.
+            var msg = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessage, false);
+            if (string.IsNullOrWhiteSpace(msg))
+            {
+                var resourceName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessageResourceName, false);
+                if (!string.IsNullOrWhiteSpace(resourceName))
+                {
+                    var resourceTypeStr = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessageResourceType, false);
+                    if (!string.IsNullOrWhiteSpace(resourceTypeStr))
+                    {
+                        // Get the message from the resource.
+                        try
+                        {
+                            var rtype = TypeHelper.GetObjectType(resourceTypeStr, true, resourceNamespace, resourceAssemblyName);
+                            var resName = rtype.GetProperty(resourceName, BindingFlags.NonPublic | BindingFlags.Static);
+                            msg = resName.GetValue(null) as string;
+                        }
+                        catch
+                        {
+                            msg = null;
+                        }
+                    }
+                }
+            }
+
+            return msg;
+        }
+
         protected void SetRegularExpressionAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
-            string regex, string defaultMsgFormat)
+            string regex, string defaultMsgFormat, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
@@ -92,7 +128,7 @@ namespace Intertech.Validation.Converters
             var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
-                var msg = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessage, false);
+                var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
                 if (string.IsNullOrWhiteSpace(msg))
                 {
                     msg = string.Format(defaultMsgFormat, displayName);
@@ -102,7 +138,7 @@ namespace Intertech.Validation.Converters
         }
 
         protected void SetMaxLengthAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
-            string length)
+            string length, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
@@ -111,7 +147,7 @@ namespace Intertech.Validation.Converters
             var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
-                var msg = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessage, false);
+                var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
                 if (string.IsNullOrWhiteSpace(msg))
                 {
                     msg = string.Format(DataAnnotationConstants.DefaultMaxLengthErrorMsg, displayName, length);
@@ -121,7 +157,7 @@ namespace Intertech.Validation.Converters
         }
 
         protected void SetMinLengthAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
-            string length)
+            string length, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
@@ -130,7 +166,7 @@ namespace Intertech.Validation.Converters
             var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
-                var msg = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.ErrorMessage, false);
+                var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
                 if (string.IsNullOrWhiteSpace(msg))
                 {
                     msg = string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, displayName, length);

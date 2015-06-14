@@ -16,10 +16,10 @@ namespace Intertech.Validation.Converters
             return IsMatch<UrlAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr)
+        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             SetRegularExpressionAAValidation(propertyName, attr, jsonString, isFirstAttr,
-                RegexConstants.Url, DataAnnotationConstants.DefaultUrlErrorMsg);
+                RegexConstants.Url, DataAnnotationConstants.DefaultUrlErrorMsg, resourceNamespace, resourceAssemblyName);
         }
     }
 }

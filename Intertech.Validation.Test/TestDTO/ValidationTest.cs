@@ -10,7 +10,7 @@ namespace Intertech.Validation.Test.TestDTO
 {
     public class ValidationTest
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "NameRequiredResource", ErrorMessageResourceType = typeof(TestResource))]
         [MinLength(3)]
         public string Name { get; set; }
 

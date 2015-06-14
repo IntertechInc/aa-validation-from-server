@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Constants\DataAnnotationConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
+    <Compile Include="GetValidationsParms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\BaseValidationConverter.cs" />
     <Compile Include="Converters\CreditCardConverter.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Converters\RequiredConverter.cs" />
     <Compile Include="Converters\StringLengthConverter.cs" />
     <Compile Include="Converters\UrlConverter.cs" />
+    <Compile Include="TypeHelper.cs" />
     <Compile Include="ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>

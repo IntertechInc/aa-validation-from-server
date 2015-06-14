@@ -16,10 +16,10 @@ namespace Intertech.Validation.Converters
             return IsMatch<PhoneAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr)
+        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             SetRegularExpressionAAValidation(propertyName, attr, jsonString, isFirstAttr,
-                RegexConstants.Phone, DataAnnotationConstants.DefaultPhoneErrorMsg);
+                RegexConstants.Phone, DataAnnotationConstants.DefaultPhoneErrorMsg, resourceNamespace, resourceAssemblyName);
         }
     }
 }

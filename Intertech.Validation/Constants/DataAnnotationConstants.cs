@@ -11,6 +11,8 @@ namespace Intertech.Validation.Constants
         public const string Display = "Display";
         public const string MinimumLength = "MinimumLength";
         public const string ErrorMessage = "ErrorMessage";
+        public const string ErrorMessageResourceName = "ErrorMessageResourceName";
+        public const string ErrorMessageResourceType = "ErrorMessageResourceType";
         public const string DefaultEmailErrorMsg = "{0} is an invalid email address.";
         public const string DefaultPhoneErrorMsg = "{0} is an invalid phone number.";
         public const string DefaultCreditCardErrorMsg = "{0} is an invalid credit card number.";

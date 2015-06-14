@@ -52,13 +52,30 @@ namespace Intertech.Validation
         /// <returns></returns>
         public object GetValidations(string dtoObjectName, string jsonObjectName, string alternateNamespace, params string[] assemblyNames)
         {
-            var jsonString = new StringBuilder("{ validations: {");
+            var parms = new GetValidationsParms(dtoObjectName, jsonObjectName)
+            {
+                DtoAlternateNamespace = alternateNamespace,
+                DtoAssemblyNames = new List<string>(assemblyNames)
+            };
 
-            GetValidationsForDto(dtoObjectName, jsonObjectName, jsonString, false, alternateNamespace, assemblyNames);
+            return GetValidations(parms);
+        }
 
-            jsonString.Append("} }");
+        /// <summary>
+        /// Get the validations for the given parms.
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
+        public object GetValidations(GetValidationsParms parms)
+        {
+            if (parms == null)
+                throw new ArgumentNullException("parms", "Expecting GetValidationParms in GetValidations call and they were not supplied.");
 
-            return JObject.Parse(jsonString.ToString());
+            GetValidationsForDto(parms);
+
+            parms.CompleteJsonString();
+
+            return JObject.Parse(parms.JsonString.ToString());
         }
 
         #region Private Methods
@@ -80,19 +97,19 @@ namespace Intertech.Validation
             return registrations.AsEnumerable<Type>();
         }
 
-        private void GetValidationsForDto(string dtoObjectName, string jsonObjectName, StringBuilder jsonString, bool isContainedDto, string alternateNamespace, params string[] assemblyNames)
+        private void GetValidationsForDto(GetValidationsParms parms)
         {
-            if (isContainedDto)
-            {
-                jsonString.Append(", ");
-            }
+            //if (isContainedDto)
+            //{
+            //    jsonString.Append(", ");
+            //}
 
-            jsonString.Append(jsonObjectName + ": { ");
+            parms.JsonString.Append(parms.JsonObjectName + ": { ");
 
-            var dtoClass = GetDtoType(dtoObjectName, alternateNamespace, assemblyNames);
+            var dtoClass = TypeHelper.GetObjectType(parms.DtoObjectName, false, parms.DtoAlternateNamespace, parms.DtoAssemblyNames.ToArray());
             if (dtoClass == null)
             {
-                var message = string.Format("DTO '{0}' not found.", dtoObjectName);
+                var message = string.Format("DTO '{0}' not found.", parms.DtoObjectName);
                 throw new Exception(message);
             }
 
@@ -113,7 +130,7 @@ namespace Intertech.Validation
                             var converter = _converters.FirstOrDefault(vc => vc.IsAttributeMatch(attr));
                             if (converter != null)
                             {
-                                converter.Convert(prop.Name, attr, attrStr, isFirstAttr);
+                                converter.Convert(prop.Name, attr, attrStr, isFirstAttr, parms.ResourceNamespace, parms.ResourceAssemblyName);
                                 isFirstAttr = false;
                             }
                         }
@@ -121,9 +138,9 @@ namespace Intertech.Validation
                         if (!isFirstAttr)
                         {
                             var sep = isFirstProp ? string.Empty : ",";
-                            jsonString.Append(sep + prop.Name + ": { ");
-                            jsonString.Append(attrStr.ToString());
-                            jsonString.Append("}");
+                            parms.JsonString.Append(sep + prop.Name + ": { ");
+                            parms.JsonString.Append(attrStr.ToString());
+                            parms.JsonString.Append("}");
 
                             isFirstProp = false;
                         }
@@ -131,61 +148,7 @@ namespace Intertech.Validation
                 }
             }
 
-            jsonString.Append("}");
-        }
-
-        /// <summary>
-        /// Get the Type for the given DTO name.
-        /// </summary>
-        /// <param name="dtoObjectName"></param>
-        /// <returns></returns>
-        private Type GetDtoType(string dtoObjectName, string alternateNamespace, params string[] assemblyNames)
-        {
-            Type type = null;
-
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve -= CurrentDomain_ReflectionOnlyAssemblyResolve;
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CurrentDomain_ReflectionOnlyAssemblyResolve;
-
-            foreach (var asmName in assemblyNames)
-            {
-                var assembly = Assembly.ReflectionOnlyLoad(asmName);
-                type = GetTypeFromAssembly(assembly, dtoObjectName, alternateNamespace);
-            }
-
-            return type;
-        }
-
-        Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            return Assembly.ReflectionOnlyLoad(args.Name);
-        }
-
-        private Type GetTypeFromAssembly(Assembly assembly, string dtoObjectName, string alternateNamespace)
-        {
-            string typeName;
-            Type type = null;
-
-            if (assembly != null)
-            {
-                var asmName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
-                typeName = string.Format("{0}.{1}", asmName, dtoObjectName);
-                type = assembly.GetType(typeName);
-
-                if (type == null)
-                {
-                    if (!string.IsNullOrWhiteSpace(alternateNamespace))
-                    {
-                        typeName = string.Format("{0}.{1}", alternateNamespace, dtoObjectName);
-                    }
-                    else
-                    {
-                        typeName = dtoObjectName;
-                    }
-                    type = assembly.GetType(typeName);
-                }
-            }
-
-            return type;
+            parms.JsonString.Append("}");
         }
 
         #endregion Private Methods

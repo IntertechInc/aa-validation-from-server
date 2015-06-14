@@ -16,18 +16,18 @@ namespace Intertech.Validation.Converters
             return IsMatch<StringLengthAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr)
+        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             var maxLength = GetConstructorArgumentValue(attr, 0);
             if (!string.IsNullOrWhiteSpace(maxLength))
             {
-                SetMaxLengthAAValidation(propertyName, attr, jsonString, isFirstAttr, maxLength);
+                SetMaxLengthAAValidation(propertyName, attr, jsonString, isFirstAttr, maxLength, resourceNamespace, resourceAssemblyName);
             }
 
             var minLength = base.GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.MinimumLength, false);
             if (!string.IsNullOrWhiteSpace(minLength))
             {
-                SetMinLengthAAValidation(propertyName, attr, jsonString, false, minLength);
+                SetMinLengthAAValidation(propertyName, attr, jsonString, false, minLength, resourceNamespace, resourceAssemblyName);
             }
         }
     }

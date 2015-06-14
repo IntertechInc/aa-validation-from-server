@@ -16,10 +16,10 @@ namespace Intertech.Validation.Converters
             return IsMatch<EmailAddressAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr)
+        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             SetRegularExpressionAAValidation(propertyName, attr, jsonString, isFirstAttr,
-                RegexConstants.Email, DataAnnotationConstants.DefaultEmailErrorMsg);
+                RegexConstants.Email, DataAnnotationConstants.DefaultEmailErrorMsg, resourceNamespace, resourceAssemblyName);
         }
     }
 }
