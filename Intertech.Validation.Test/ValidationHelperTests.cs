@@ -13,6 +13,7 @@ namespace Intertech.Validation.Test
     public class ValidationHelperTests
     {
         private object _validations;
+		private object _validationsCC;
         private object _emptyValidations;
         private GetValidationsParms _parms;
 
@@ -45,6 +46,29 @@ namespace Intertech.Validation.Test
             vals.Append(" }");
             vals.Append("} }");
             _validations = JObject.Parse(vals.ToString());
+
+
+			var valsCC = new StringBuilder("{ validations: { model: { ");
+			valsCC.Append("name: { \"ng-minlength\": 3, \"ng-minlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, "Name", "3") + "\", \"required\": true, \"required-msg\": \"" + string.Format(DataAnnotationConstants.DefaultRequiredErrorMsg, "Name") + "\" }");
+			valsCC.Append(", creditCard: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.CreditCard) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultCreditCardErrorMsg, "CreditCard") + "\" }");
+			valsCC.Append(", email: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Email) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultEmailErrorMsg, "Email") + "\" }");
+			valsCC.Append(", email2: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Email) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.Email + "\" }");
+			valsCC.Append(", street: { \"ng-maxlength\": 40, \"ng-maxlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMaxLengthErrorMsg, "Street", "40") + "\" }");
+			valsCC.Append(", phone: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Phone) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultPhoneErrorMsg, "Phone") + "\" }");
+			valsCC.Append(", phone2: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Phone) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.Phone + "\" }");
+			valsCC.Append(", favoriteNumber: { \"min\": 1, \"min-msg\": \"" + string.Format(DataAnnotationConstants.DefaultRangeErrorMsg, "FavoriteNumber", "1", "100") + "\", \"max\": 100, \"max-msg\": \"" + string.Format(DataAnnotationConstants.DefaultRangeErrorMsg, "FavoriteNumber", "1", "100") + "\" }");
+			valsCC.Append(", integerString: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Integer) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultRegexErrorMsg, "IntegerString") + "\" }");
+			valsCC.Append(", decimalString: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Decimal) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.Regex + "\" }");
+			valsCC.Append(", nickName: { \"ng-maxlength\": 30, \"ng-maxlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMaxLengthErrorMsg, "NickName", "30") + "\", \"ng-minlength\": 2, \"ng-minlength-msg\": \"" + string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, "NickName", "2") + "\" }");
+			valsCC.Append(", website: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Url) + "/\", \"ng-pattern-msg\": \"" + string.Format(DataAnnotationConstants.DefaultUrlErrorMsg, "Website") + "\" }");
+			valsCC.Append(", length: { \"ng-minlength\": 5, \"ng-minlength-msg\": \"" + ErrorMessages.MinLength + "\", \"ng-maxlength\": 25, \"ng-maxlength-msg\": \"" + ErrorMessages.MaxLength + "\", \"required\": true, \"required-msg\": \"" + ErrorMessages.Required + "\" }");
+			valsCC.Append(", visa: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.CreditCard) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.CreditCard + "\", \"ng-maxlength\": 30, \"ng-maxlength-msg\": \"" + ErrorMessages.VisaLength + "\", \"ng-minlength\": 12, \"ng-minlength-msg\": \"" + ErrorMessages.VisaLength + "\" }");
+			valsCC.Append(", url: { \"ng-pattern\": \"/" + RegexConstants.GetRegularExpressionForJson(RegexConstants.Url) + "/\", \"ng-pattern-msg\": \"" + ErrorMessages.Url + "\" }");
+			valsCC.Append(" }");
+			valsCC.Append("} }");
+			_validationsCC = JObject.Parse(valsCC.ToString());
+
+
 
             _emptyValidations = JObject.Parse("{ validations: { model: { } } }");
         }
@@ -83,13 +107,27 @@ namespace Intertech.Validation.Test
         }
 
         [TestMethod]
+		public void ValidationHelper_GetValidationsCC_Success_Test()
+		{
+			// Assemble
+			var valHelper = new ValidationHelper();
+
+			// Act
+			var vals = valHelper.GetValidations("TestDTO.ValidationTest", "model", null, true, "Intertech.Validation.Test");
+
+			// Assert
+			Assert.IsNotNull(vals);
+			AssertJsonEqual(_validationsCC, vals);
+		}
+		
+		[TestMethod]
         public void ValidationHelper_GetValidations_Empty_Test()
         {
             // Assemble
             var valHelper = new ValidationHelper();
 
             // Act
-            var vals = valHelper.GetValidations("TestDTO.NoValidations", "model", null, "Intertech.Validation.Test");
+            var vals = valHelper.GetValidations("TestDTO.NoValidations", "model", null, false, "Intertech.Validation.Test");
 
             // Assert
             Assert.IsNotNull(vals);
@@ -104,7 +142,7 @@ namespace Intertech.Validation.Test
             var valHelper = new ValidationHelper();
 
             // Act
-            var vals = valHelper.GetValidations("blah", "model", null, "Intertech.Validation.Test");
+            var vals = valHelper.GetValidations("blah", "model", null, false, "Intertech.Validation.Test");
 
             // Assert
             Assert.IsNull(vals);
@@ -118,7 +156,7 @@ namespace Intertech.Validation.Test
             var valHelper = new ValidationHelper();
 
             // Act
-            var vals = valHelper.GetValidations("TestDTO.ValidationTest", "model", null, "Blah.Validation.Test");
+            var vals = valHelper.GetValidations("TestDTO.ValidationTest", "model", null, false, "Blah.Validation.Test");
 
             // Assert
             Assert.IsNull(vals);

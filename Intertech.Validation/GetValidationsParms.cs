@@ -38,5 +38,7 @@ namespace Intertech.Validation
         public string ResourceNamespace { get; set; }
 
         public string ResourceAssemblyName { get; set; }
+
+        public bool UseCamelCaseForProperties { get; set; }
     }
 }
