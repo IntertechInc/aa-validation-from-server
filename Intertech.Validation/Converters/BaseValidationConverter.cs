@@ -104,7 +104,7 @@ namespace Intertech.Validation.Converters
                         try
                         {
                             var rtype = TypeHelper.GetObjectType(resourceTypeStr, true, resourceNamespace, resourceAssemblyName);
-                            var resName = rtype.GetProperty(resourceName, BindingFlags.NonPublic | BindingFlags.Static);
+                            var resName = rtype.GetProperty(resourceName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                             msg = resName.GetValue(null) as string;
                         }
                         catch
