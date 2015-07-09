@@ -21,5 +21,11 @@ TODO:
 ### Intertech.Validation
 The actual source of the library.
 
+#### Build the NuGet Package
+
+```
+.nuget\NuGet.exe pack Intertech.Validation\Intertech.Validation.csproj
+```
+
 ### Intertech.Validation.Test
 The test-project with backend unit-tests
