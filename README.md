@@ -27,6 +27,28 @@ Typically, the following code would reside on the Web API controller code:
 - "useCamelCaseForProperties" is a bool indicating if the helper should provide case alteration to property names to produce camel case.
 - "DTO.Assembly.Name" is the name of the assembly to load for reflecting the DTO properties that have validation attributes.
 
+##Using GetValidationsParms to call GetValidations
+If your project is using a separate assembly for resource files, use the GetValidationsParms version of GetValidations.
+The call would now look like this:
+
+```C#
+	public IHttpActionResult GetValidations(string dtoObjectName, string jsonObjectName)
+	{
+		var valHelper = new ValidationHelper();
+		var parms = new GetValidationsParms(dtoObjectName, jsonObjectName);
+		parms.DtoAlternateNamespace = "Namespace.If.Doesnt.Match.Assembly";
+		parms.DtoAssemblyNames = "DTO.Assembly.Name";
+		parms.UseCamelCaseForProperties = true;
+		parms.ResourceNamespace = "Namespace.For.Resource";
+		parms.ResourceAssemblyName = "Resource.Assembly.Name";
+
+        object jsonObject = valHelper.GetValidations(parms);
+	
+	    return Ok(jsonObject);
+	}
+```
+
+
 ##DTO Example
 ```C#
     namespace AATestAPI.Models
