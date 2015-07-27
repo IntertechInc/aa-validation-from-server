@@ -16,9 +16,9 @@ namespace Intertech.Validation.Converters
             return IsMatch<UrlAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
+        public void Convert(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
-            SetRegularExpressionAAValidation(propertyName, attr, jsonString, isFirstAttr,
+            SetRegularExpressionAAValidation(propertyName, displayName, attr, jsonString, isFirstAttr,
                 RegexConstants.Url, DataAnnotationConstants.DefaultUrlErrorMsg, resourceNamespace, resourceAssemblyName);
         }
     }

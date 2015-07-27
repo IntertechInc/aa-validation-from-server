@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Intertech.Validation.Converters;
 using System.Globalization;
+using Intertech.Validation.Constants;
 
 namespace Intertech.Validation
 {
@@ -121,13 +122,14 @@ namespace Intertech.Validation
                     {
                         var attrStr = new StringBuilder();
                         var isFirstAttr = true;
+                        var displayName = GetDisplayName(prop);
 
                         foreach (var attr in prop.CustomAttributes)
                         {
                             var converter = _converters.FirstOrDefault(vc => vc.IsAttributeMatch(attr));
                             if (converter != null)
                             {
-                                converter.Convert(prop.Name, attr, attrStr, isFirstAttr, parms.ResourceNamespace, parms.ResourceAssemblyName);
+                                converter.Convert(prop.Name, displayName, attr, attrStr, isFirstAttr, parms.ResourceNamespace, parms.ResourceAssemblyName);
                                 isFirstAttr = false;
                             }
                         }
@@ -154,6 +156,26 @@ namespace Intertech.Validation
             }
 
             parms.JsonString.Append("}");
+        }
+
+        private string GetDisplayName(PropertyInfo prop)
+        {
+            if (prop != null)
+            {
+                var displayName = prop.Name;
+
+                var customAtt = prop.CustomAttributes.FirstOrDefault(ca => ca.AttributeType.Name == "DisplayAttribute");
+                if (customAtt != null)
+                {
+                    var dn = (string)customAtt.NamedArguments.FirstOrDefault(na => na.MemberName == DataAnnotationConstants.Name).TypedValue.Value;
+                    if (!string.IsNullOrWhiteSpace(dn))
+                        displayName = dn;
+                }
+
+                return displayName;
+            }
+
+            return null;
         }
 
 		private string CamelCaseProperty(string input)

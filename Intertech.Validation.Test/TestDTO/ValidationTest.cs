@@ -33,6 +33,7 @@ namespace Intertech.Validation.Test.TestDTO
         public string IntegerString { get; set; }
 
         [StringLength(30, MinimumLength = 2)]
+        [Display(Name = "Nick Name")]
         public string NickName { get; set; }
 
         [Url]

@@ -118,14 +118,13 @@ namespace Intertech.Validation.Converters
             return msg;
         }
 
-        protected void SetRegularExpressionAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
+        protected void SetRegularExpressionAAValidation(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
             string regex, string defaultMsgFormat, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
             jsonString.Append("'ng-pattern': \"/" + RegexConstants.GetRegularExpressionForJson(regex) + "/\"");
 
-            var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
@@ -137,14 +136,13 @@ namespace Intertech.Validation.Converters
             }
         }
 
-        protected void SetMaxLengthAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
+        protected void SetMaxLengthAAValidation(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
             string length, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
             jsonString.Append("'ng-maxlength': " + length);
 
-            var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
@@ -156,14 +154,13 @@ namespace Intertech.Validation.Converters
             }
         }
 
-        protected void SetMinLengthAAValidation(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
+        protected void SetMinLengthAAValidation(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr,
             string length, string resourceNamespace = null, string resourceAssemblyName = null)
         {
             PrependComma(jsonString, isFirstAttr);
 
             jsonString.Append("'ng-minlength': " + length);
 
-            var displayName = GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);

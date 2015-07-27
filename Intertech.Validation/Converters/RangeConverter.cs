@@ -16,7 +16,7 @@ namespace Intertech.Validation.Converters
             return IsMatch<RangeAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
+        public void Convert(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             PrependComma(jsonString, isFirstAttr);
 
@@ -26,7 +26,6 @@ namespace Intertech.Validation.Converters
             {
                 jsonString.Append("'min': " + minimum);
 
-                var displayName = base.GetNamedArgumentValue(propertyName, attr, DataAnnotationConstants.Display);
                 if (!string.IsNullOrWhiteSpace(displayName))
                 {
                     var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);

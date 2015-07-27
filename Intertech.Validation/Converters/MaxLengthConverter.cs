@@ -15,12 +15,12 @@ namespace Intertech.Validation.Converters
             return IsMatch<MaxLengthAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
+        public void Convert(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
             var length = GetConstructorArgumentValue(attr, 0);
             if (!string.IsNullOrWhiteSpace(length))
             {
-                SetMaxLengthAAValidation(propertyName, attr, jsonString, isFirstAttr, length, resourceNamespace, resourceAssemblyName);
+                SetMaxLengthAAValidation(propertyName, displayName, attr, jsonString, isFirstAttr, length, resourceNamespace, resourceAssemblyName);
             }
         }
     }

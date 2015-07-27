@@ -16,9 +16,9 @@ namespace Intertech.Validation.Converters
             return IsMatch<PhoneAttribute>(attr);
         }
 
-        public void Convert(string propertyName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
+        public void Convert(string propertyName, string displayName, CustomAttributeData attr, StringBuilder jsonString, bool isFirstAttr, string resourceNamespace, string resourceAssemblyName)
         {
-            SetRegularExpressionAAValidation(propertyName, attr, jsonString, isFirstAttr,
+            SetRegularExpressionAAValidation(propertyName, displayName, attr, jsonString, isFirstAttr,
                 RegexConstants.Phone, DataAnnotationConstants.DefaultPhoneErrorMsg, resourceNamespace, resourceAssemblyName);
         }
     }
