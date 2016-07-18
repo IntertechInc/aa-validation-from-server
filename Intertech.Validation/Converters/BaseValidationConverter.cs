@@ -115,6 +115,30 @@ namespace Intertech.Validation.Converters
                 }
             }
 
+            if(msg == null)
+            {
+                //valide the resource default value
+                try
+                {
+                    if(attr.AttributeType.Name.EndsWith("Attribute"))
+                    {
+                        var rtype = TypeHelper.GetObjectType(resourceNamespace, true, resourceNamespace, resourceAssemblyName);
+                        if (rtype != null)
+                        {
+                            var resName = rtype.GetProperty(attr.AttributeType.Name.Substring(0, attr.AttributeType.Name.Length - 9 /*Attribute*/), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                            if (resName != null)
+                            {
+                                msg = resName.GetValue(null) as string;
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    msg = null;
+                }
+            }
+
             return msg;
         }
 
