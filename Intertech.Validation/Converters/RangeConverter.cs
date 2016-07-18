@@ -29,10 +29,9 @@ namespace Intertech.Validation.Converters
                 if (!string.IsNullOrWhiteSpace(displayName))
                 {
                     var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
-                    if (string.IsNullOrWhiteSpace(msg))
-                    {
-                        msg = string.Format(DataAnnotationConstants.DefaultRangeErrorMsg, displayName, minimum, maximum);
-                    }
+                   
+                    msg = string.Format(string.IsNullOrWhiteSpace(msg) ? DataAnnotationConstants.DefaultRangeErrorMsg : msg, displayName, minimum, maximum);
+
                     jsonString.Append(", 'min-msg': \"" + msg + "\"");
 
                     jsonString.Append(", 'max': " + maximum);

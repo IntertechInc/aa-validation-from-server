@@ -79,6 +79,27 @@ namespace Intertech.Validation.Test
         }
 
         [TestMethod]
+        public void ValidationHelper_Resource_Test()
+        {
+
+
+            var parms = new GetValidationsParms("TestDTO.ValidationTest2", "model")
+            {
+                DtoAssemblyNames = new List<string> { "Intertech.Validation.Test" },
+                ResourceAssemblyName = "Intertech.Validation.Test",
+                ResourceNamespace = "Intertech.Validation.Test.TestDTO.TestResource"
+            };
+
+            // Act
+            var valHelper = new ValidationHelper();
+
+            var ret = valHelper.GetValidations(parms);
+
+            var str = string.Format(TestResource.Required, "Name");
+            Assert.IsTrue(ret.ToString().Contains("\"required-msg\": \"" + str + "\""));
+        }
+
+        [TestMethod]
         public void ValidationHelper_Constructor_Test()
         {
             // Assemble
@@ -133,6 +154,7 @@ namespace Intertech.Validation.Test
             Assert.IsNotNull(vals);
             AssertJsonEqual(_emptyValidations, vals);
         }
+
 
         [TestMethod]
         [ExpectedException(typeof(Exception), "DTO 'blah' not found.")]

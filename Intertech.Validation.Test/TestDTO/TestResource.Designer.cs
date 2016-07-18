@@ -68,5 +68,14 @@ namespace Intertech.Validation.Test.TestDTO {
                 return ResourceManager.GetString("NameRequiredResource", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default required {0}.
+        /// </summary>
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
     }
 }

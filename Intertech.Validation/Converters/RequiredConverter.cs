@@ -25,10 +25,9 @@ namespace Intertech.Validation.Converters
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
-                if (string.IsNullOrWhiteSpace(msg))
-                {
-                    msg = string.Format(DataAnnotationConstants.DefaultRequiredErrorMsg, displayName);
-                }
+                
+                msg = string.Format(string.IsNullOrWhiteSpace(msg) ? DataAnnotationConstants.DefaultRequiredErrorMsg : msg, displayName);
+
                 jsonString.Append(", 'required-msg': \"" + msg + "\"");
             }
         }
