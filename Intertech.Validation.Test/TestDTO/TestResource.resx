@@ -120,4 +120,7 @@
   <data name="NameRequiredResource" xml:space="preserve">
     <value>Name is required (resource).</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Default required {0}</value>
+  </data>
 </root>

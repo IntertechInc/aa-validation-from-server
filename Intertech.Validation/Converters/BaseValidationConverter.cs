@@ -152,10 +152,9 @@ namespace Intertech.Validation.Converters
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
-                if (string.IsNullOrWhiteSpace(msg))
-                {
-                    msg = string.Format(defaultMsgFormat, displayName);
-                }
+
+                msg = string.Format(string.IsNullOrWhiteSpace(msg) ? defaultMsgFormat : msg, displayName);
+
                 jsonString.Append(", 'ng-pattern-msg': \"" + msg + "\"");
             }
         }
@@ -170,10 +169,10 @@ namespace Intertech.Validation.Converters
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
-                if (string.IsNullOrWhiteSpace(msg))
-                {
-                    msg = string.Format(DataAnnotationConstants.DefaultMaxLengthErrorMsg, displayName, length);
-                }
+                
+                msg = string.Format(string.IsNullOrWhiteSpace(msg) ? DataAnnotationConstants.DefaultMaxLengthErrorMsg : msg, displayName, length);
+
+
                 jsonString.Append(", 'ng-maxlength-msg': \"" + msg + "\"");
             }
         }
@@ -188,10 +187,9 @@ namespace Intertech.Validation.Converters
             if (!string.IsNullOrWhiteSpace(displayName))
             {
                 var msg = GetErrorMessage(propertyName, attr, resourceNamespace, resourceAssemblyName);
-                if (string.IsNullOrWhiteSpace(msg))
-                {
-                    msg = string.Format(DataAnnotationConstants.DefaultMinLengthErrorMsg, displayName, length);
-                }
+
+                msg = string.Format(string.IsNullOrWhiteSpace(msg) ? DataAnnotationConstants.DefaultMinLengthErrorMsg : msg, displayName, length);
+
                 jsonString.Append(", 'ng-minlength-msg': \"" + msg + "\"");
             }
         }
